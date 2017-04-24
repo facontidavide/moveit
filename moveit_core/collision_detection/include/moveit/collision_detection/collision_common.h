@@ -149,7 +149,7 @@ struct CollisionResult
 {
   CollisionResult() : collision(false), distance(nearest_points.distance), contact_count(0)
   {
-      distance = (std::numeric_limits<double>::max();
+      distance = std::numeric_limits<double>::max();
   }
   typedef std::map<std::pair<std::string, std::string>, std::vector<Contact> > ContactMap;
 

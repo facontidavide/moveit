@@ -95,6 +95,19 @@ struct Contact
   BodyType body_type_2;
 };
 
+struct NearestPoints
+{
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  /** \brief contact position */
+  Eigen::Vector3d pos[2];
+
+  /** \brief distance between bodies */
+  double distance;
+
+  std::string body_name[2];
+};
+
 /** \brief When collision costs are computed, this structure contains information about the partial cost incurred in a
  * particular volume */
 struct CostSource
@@ -134,8 +147,9 @@ struct CostSource
 /** \brief Representation of a collision checking result */
 struct CollisionResult
 {
-  CollisionResult() : collision(false), distance(std::numeric_limits<double>::max()), contact_count(0)
+  CollisionResult() : collision(false), distance(nearest_points.distance), contact_count(0)
   {
+      distance = (std::numeric_limits<double>::max();
   }
   typedef std::map<std::pair<std::string, std::string>, std::vector<Contact> > ContactMap;
 
@@ -154,8 +168,11 @@ struct CollisionResult
   /** \brief True if collision was found, false otherwise */
   bool collision;
 
-  /** \brief Closest distance between two bodies */
-  double distance;
+  /** \brief Closest distance between two bodies. Reference to  */
+  double& distance;
+
+  /** \brief Closest points. This field contains valid data only if (distance>0) */
+  NearestPoints nearest_points;
 
   /** \brief Number of contacts returned */
   std::size_t contact_count;

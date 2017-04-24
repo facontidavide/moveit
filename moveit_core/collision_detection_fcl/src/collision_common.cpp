@@ -473,8 +473,15 @@ bool distanceCallback(fcl::CollisionObject* o1, fcl::CollisionObject* o2, void* 
   }
   else
   {
-    if (cdata->res_->distance > d)
-      cdata->res_->distance = d;
+    if (cdata->res_->distance > d){
+        cdata->res_->distance = d;
+        for (int i=0; i<3; i++){
+            cdata->res_->nearest_points.pos[0][i] = dist_result.nearest_points[0][i];
+            cdata->res_->nearest_points.pos[1][i] = dist_result.nearest_points[1][i];
+            cdata->res_->nearest_points.body_name[0] =  cd1->getID();
+            cdata->res_->nearest_points.body_name[1] =  cd2->getID();
+        }
+    }
   }
 
   min_dist = cdata->res_->distance;
